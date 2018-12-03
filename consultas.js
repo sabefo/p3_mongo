@@ -47,7 +47,13 @@ db.usuarios
 
 // 3.- Listado de paıs-(edad mınima, edad-máxima, edad media) teniendo en cuenta unicamente los usuarios mayores de edad, es decir, con mas de 17 años. Los paıses con menos de 3 usuarios mayores de edad no deben aparecer en el resultado.
 function agg3() {
-  /* */
+db.usuarios
+  .aggregate([
+    { $match: { "edad": { $gt: 17 } } },
+    { $project: { _id: 0, edad: "$edad", pais: "$direccion.pais" } },
+    { $group: { _id: "$pais", min: { $min: "$edad" }, max: { $max: "$edad" }, avg: { $avg: "$edad" }, count: { $sum: 1 } } },
+    { $sort: { count: -1, _id: 1 } },
+  ])
 }
 
 // 4.- Listado de tıtulo pelıcula-numero de visualizaciones de las 10 pelıculas mas vistas, ordenado por numero descencente de visualizaciones. En caso de empate, romper por tıtulo de pelıcula ascendente.
