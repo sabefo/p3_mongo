@@ -37,13 +37,6 @@ peliculas = db['peliculas']
 
 # 1. Fecha y título de las primeras 'n' peliculas vistas por el usuario 'user_id'
 # usuario_peliculas( 'fernandonoguera', 3 )
-import json
-import pymongo
-
-usuarios = pymongo.MongoClient('usuarios.json')
-db = usuarios.book
-print(db)
-
 def usuario_peliculas(user_id, n):
   pprint.pprint(list(usuarios.find({ '_id' : user_id }, { 'visualizaciones' : { '$slice' : n } })))
 
@@ -55,9 +48,6 @@ def usuarios_gustos(gustos, n):
 
 # 3. _id de usuario de sexo 'sexo' y con una edad entre 'edad_min' e 'edad_max' incluidas
 # usuario_sexo_edad('M', 50, 80)
-def usuario_sexo_edad( sexo, edad_min, edad_max ):
-  pprint.pprint(list(usuarios.find({ 'gustos' : { '$size' : n } })))
-
 def usuario_sexo_edad(sexo, edad_min, edad_max):
   pprint.pprint(list(usuarios.find({ 'edad' : { '$gt' : edad_min, '$lt' : edad_max } }, { 'sexo' : sexo })))
 
@@ -65,10 +55,6 @@ def usuario_sexo_edad(sexo, edad_min, edad_max):
 #    ordenado por edad ascendente
 # usuarios_apellidos()
 def usuarios_apellidos():
-  pprint.pprint(list(usuarios.find({ 'gustos' : { '$size' : n } })))
-# 5.- Titulo de peliculas cuyo director empiece con un 'prefijo' dado
-# pelicula_prefijo( 'Yol' )
-def pelicula_prefijo( prefijo ):
   pprint.pprint(list(usuarios.find({ '$where' : 'this.apellido1 == this.apellido2' })))
 
 # 5.- Titulo de peliculas cuyo director empiece con un 'prefijo' dado
