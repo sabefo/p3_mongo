@@ -40,8 +40,14 @@ db.peliculas
 // 2.- Listado de los 3 tipos de pelıcula mas populares entre los usuarios de los ’Emiratos Árabes Unidos’, ordenado de mayor a menor numero de usuarios que les gusta. En caso de empate a numero de usuarios, se usa el tipo de pelıcula de manera ascendente.
 function agg2() {
 db.usuarios
+db.usuarios
   .aggregate([
-    { $match: { "direccion.pais": "Emiratos Árabes Unidos" } }
+    { $match: { "direccion.pais": "Emiratos Árabes Unidos" } },
+    { $unwind: "$gustos" },
+    { $project: { _id: 0, gusto: "$gustos" } },
+    { $group: { _id: "$gusto", count: { $sum: 1 } } },
+    { $sort: { count: -1, _id: 1 } },
+    { $limit: 3 }
   ])
 }
 
