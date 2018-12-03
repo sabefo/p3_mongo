@@ -80,8 +80,23 @@ function agg4() {
 /* MAPREDUCE */  
   
 // 1.- Listado de paıs-numero de pelıculas rodadas en el.
+var map1 = function() {
+  for (var i = 0; i < this.pais.length; i++) {
+    emit(this.pais[i], 1);
+  }
+}
+
+var reduce1 = function(count) {
+  total_count = 0;
+  for (var i = 0; i < count.length; i++) {
+    total_count += 1;
+  }
+
+  return total_count;
+}
+
 function mr1() {
-  /* */
+  return db.peliculas.mapReduce(map1, reduce1, { out: { inline: 1 } });
 }
 
 // 2.- Listado de rango de edad -numero de usuarios. Los rangos de edad son periodos de 10 años: [0, 10), [10, 20), [20, 30), etc. Si no hay ningun usuario con edad en un rango concreto dicho rango no deberia aparecer en la salida.

@@ -76,9 +76,9 @@ def usuarios_vieron_pelicula(id_pelicula, inicio, fin):
   # pass
 
 # usuario_peliculas('wgutiérrez', 3)
-# usuarios_gustos(['terror', 'comedia'], 5)
+usuarios_gustos(['terror', 'comedia'], 5)
 # usuario_sexo_edad('M', 50, 80)
 # usuarios_apellidos()
 # pelicula_prefijo('Yol')
-usuarios_gustos_numero(6)
-usuarios_vieron_pelicula('583ef650323e9572e2812680', '2015-01-01', '2016-12-31')
+# usuarios_gustos_numero(6)
+# usuarios_vieron_pelicula('583ef650323e9572e2812680', '2015-01-01', '2016-12-31')
