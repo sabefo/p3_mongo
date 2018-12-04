@@ -105,8 +105,30 @@ function mr2() {
 }
 
 // 3.- Listado de pais-(edad mınima, edad-maxima, edad media) teniendo en cuenta unicamente los usuarios con mas de 17 años.
+var map3 = function() {
+  if (this.edad > 17) {
+    emit(this.direccion['pais'], this.edad);
+  }
+}
+
+var reduce3 = function(ages) {
+  average = 0;
+  min = Math.min(ages) || 0;
+  max = Math.max(ages) || 0;
+  for (var i = 0; i < ages.length; i++) {
+    average += ages[i];
+  }
+  average = average / ages.length || 0;
+  x = {
+    'min': min,
+    'max': max,
+    'average': average,
+  };
+  return x;
+}
+
 function mr3() {
-  /* */
+  return db.usuarios.mapReduce(map3, reduce3, { out: { inline: 1 } });
 }
 
 // 4.- Listado de año-numero de visualizaciones veraniegas, donde una @visualizacion veraniega es aquella que se ha producido en los meses de junio, julio o agosto.
