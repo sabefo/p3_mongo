@@ -100,8 +100,16 @@ function mr1() {
 }
 
 // 2.- Listado de rango de edad -numero de usuarios. Los rangos de edad son periodos de 10 años: [0, 10), [10, 20), [20, 30), etc. Si no hay ningun usuario con edad en un rango concreto dicho rango no deberia aparecer en la salida.
+var map2 = function() {
+  emit(Math.floor(this.edad / 10), 1);
+}
+
+var reduce2 = function(k, count) {
+  return Array.sum(count);
+}
+
 function mr2() {
-  /* */
+  return db.usuarios.mapReduce(map2, reduce2, { out: { inline: 1 } });
 }
 
 // 3.- Listado de pais-(edad mınima, edad-maxima, edad media) teniendo en cuenta unicamente los usuarios con mas de 17 años.
@@ -111,20 +119,27 @@ var map3 = function() {
   }
 }
 
-var reduce3 = function(ages) {
+var reduce3 = function(k, ages) {
   average = 0;
-  min = Math.min(ages) || 0;
-  max = Math.max(ages) || 0;
+
+  min = 0;
+  max = 0;
   for (var i = 0; i < ages.length; i++) {
+    if (ages[i] > max) {
+      max = ages[i];
+    }
+    if (ages[i] < min) {
+      min = ages[i];
+    }
     average += ages[i];
   }
   average = average / ages.length || 0;
-  x = {
+  data = {
     'min': min,
     'max': max,
     'average': average,
   };
-  return x;
+  return data;
 }
 
 function mr3() {
@@ -143,17 +158,15 @@ var map4 = function() {
   }
 }
 
-var reduce4 = function(count) {
+var reduce4 = function(k, count) {
   total_count = 0;
   for (var i = 0; i < count.length; i++) {
     total_count += 1;
   }
 
-  return total_count;
+  return Array.sum(count);
 }
 
 function mr4() {
   return db.usuarios.mapReduce(map4, reduce4, { out: { inline: 1 } });
 }
-// 6-8
-// "fecha" :"1978-12-27" } ],
