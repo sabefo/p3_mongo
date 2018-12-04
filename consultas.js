@@ -1,5 +1,12 @@
 /*
-* CABECERA AQUI
+ -*- coding: utf-8 -*-
+ Santiago Bermúdez y John Torres declaramos que esta solución
+ es fruto exclusivamente de nuestro trabajo personal. No hemos sido
+ ayudados por ninguna otra persona ni hemos obtenido la solución de
+ fuentes externas, y tampoco hemos compartido nuestra solución con
+ nadie. Declaramos además que no hemos realizado de manera desho-
+ nesta ninguna otra actividad que pueda mejorar nuestros resultados
+ ni perjudicar los resultados de los demás.
 */
 
 // {
