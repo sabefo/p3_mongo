@@ -110,7 +110,28 @@ function mr3() {
 }
 
 // 4.- Listado de año-numero de visualizaciones veraniegas, donde una @visualizacion veraniega es aquella que se ha producido en los meses de junio, julio o agosto.
-function mr4() {
-  /* */
+var map4 = function() {
+  var inicio = '-06-01';
+  var fin = '-08-31';
+  for (var i = 0; i < this.visualizaciones.length; i++) {
+    var anio = this.visualizaciones[i]['fecha'].substring(0, 4);
+    if ((anio + inicio <= this.visualizaciones[i]['fecha']) && (anio + fin >= this.visualizaciones[i]['fecha'])) {
+      emit(anio, 1);
+    }
+  }
 }
 
+var reduce4 = function(count) {
+  total_count = 0;
+  for (var i = 0; i < count.length; i++) {
+    total_count += 1;
+  }
+
+  return total_count;
+}
+
+function mr4() {
+  return db.usuarios.mapReduce(map4, reduce4, { out: { inline: 1 } });
+}
+// 6-8
+// "fecha" :"1978-12-27" } ],
