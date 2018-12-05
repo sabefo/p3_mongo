@@ -12,35 +12,17 @@ import pymongo
 from bson import ObjectId
 import pprint
 
-# usuarios = open('usuarios.json')
-# usuarios_json = json.load(usuarios)
-# print(usuarios_json)
-
-# from bson import json_util
-# data = json_util.loads(usuarios.read())
-
 client = pymongo.MongoClient('localhost', 27017)
 db = client['sgdi_pr3']
 usuarios = db['usuarios']
 peliculas = db['peliculas']
-
-# pprint.pprint(usuarios.find_one())
-# pprint.pprint(list(peliculas.find().limit(5)))
-# pprint.pprint(list(usuarios.find({ '_id' : 'wgutiérrez' })))
-# pprint.pprint(list(usuarios.find({ gustos : { $all : ['terror', 'comedia'] } })))
-# with open('usuarios.json') as f:
-#   file_data = json.load(f)
-
-# collection_currency.insert_many(usuarios)
-# client.close()
-
 
 # 1. Fecha y título de las primeras 'n' peliculas vistas por el usuario 'user_id'
 # usuario_peliculas( 'fernandonoguera', 3 )
 def usuario_peliculas(user_id, n):
   pprint.pprint(list(usuarios.find({ '_id' : user_id }, { 'visualizaciones' : { '$slice' : n } })))
 
-# 2. _id, nombre y apellidos de los primeros 'n' usuarios a los que les gusten 
+# 2. _id, nombre y apellidos de los primeros 'n' usuarios a los que les gusten
 # varios tipos de película 'gustos' a la vez
 # usuarios_gustos(  ['terror', 'comedia'], 5  )
 def usuarios_gustos(gustos, n):
@@ -67,16 +49,14 @@ def pelicula_prefijo(prefijo):
 def usuarios_gustos_numero(n):
   pprint.pprint(list(usuarios.find({ 'gustos' : { '$size' : n } })))
 
-# 7.- usuarios que vieron pelicula la pelicula 'id_pelicula' en un periodo 
+# 7.- usuarios que vieron pelicula la pelicula 'id_pelicula' en un periodo
 #     concreto 'inicio' - 'fin'
 # usuarios_vieron_pelicula('583ef650323e9572e2812680', '2015-01-01', '2016-12-31')
 def usuarios_vieron_pelicula(id_pelicula, inicio, fin):
-  # pprint.pprint(list(usuarios.find({ 'visualizaciones.fecha' : { '$gt' : inicio, '$lt' : fin } }, { 'visualizaciones._id' : ObjectId(id_pelicula) })))
   pprint.pprint(list(usuarios.find({ 'visualizaciones._id' : ObjectId(id_pelicula) }, { 'visualizaciones.fecha' : { '$gt' : inicio, '$lt' : fin } })))
-  # pass
 
-# usuario_peliculas('wgutiérrez', 3)
-usuarios_gustos(['terror', 'comedia'], 5)
+usuario_peliculas('wgutiérrez', 3)
+# usuarios_gustos(['terror', 'comedia'], 5)
 # usuario_sexo_edad('M', 50, 80)
 # usuarios_apellidos()
 # pelicula_prefijo('Yol')

@@ -166,11 +166,6 @@ var map4 = function() {
 }
 
 var reduce4 = function(k, count) {
-  total_count = 0;
-  for (var i = 0; i < count.length; i++) {
-    total_count += 1;
-  }
-
   return Array.sum(count);
 }
 
